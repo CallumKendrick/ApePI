@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var pusherConfig = require("./pusherConfig.json");
 var pusher = new Pusher(pusherConfig);
 
-app.use("/", express.static(__dirname + "html"));
+app.use("/", express.static(__dirname + "/html"));
 
 app.use(bodyParser.urlencoded( {
   extended: true

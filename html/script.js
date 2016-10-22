@@ -1,5 +1,3 @@
-var newestQuestion = -1;
-
 $(document).ready(function() {
 
     var APP_KEY = "b3453c59cc3f52599663";
@@ -7,28 +5,29 @@ $(document).ready(function() {
     var pusher = new Pusher(APP_KEY);
     var questionsChannel = pusher.subscribe('questions');
 
+    var questionsCount = 0;
 
     questionsChannel.bind('new-question', function(data) {
-        drawQuestion(data.number, data.text, data.username);
-        newestQuestion = data.number;
+        drawQuestion(data.text, data.username);
+        ++questionsCount;
     });
 
+    drawQuestion("what if pingu is not kill?", "bob");
+    drawQuestion("what is the meaning of life?", "jim");
     //should push queue to front of queue and remove duplicates
-    drawQuestionQueue();
-
-    questionsChannel.bind('question-answered', function(data) {
-        undrawQuestion(data.number);
-    });
+    drawQuestionQueue(questionsCount);
 
     drawCurrentlyAnsweringQuestion();
 
     questionsChannel.bind('answering-question', function(data) {
-        moveQuestionToAnswering(data.number);
+        nextQuestion();
     });
+
+    nextQuestion();
 
 });
 
-function makeHtmlQuestion(questionNumber, questionText, username) {
+function makeHtmlQuestion(questionText, username) {
 
     var usernameElement = document.createElement("h2");
     $(usernameElement).addClass("username");
@@ -41,7 +40,6 @@ function makeHtmlQuestion(questionNumber, questionText, username) {
 
     var div = document.createElement("div");
     $(div).addClass("question");
-    $(div).attr("id", "question-" + questionNumber);
 
     $(div).append(usernameElement);
     $(div).append(questionBody);
@@ -49,7 +47,20 @@ function makeHtmlQuestion(questionNumber, questionText, username) {
     return div;
 }
 
-function drawQuestion(questionNumber, questionText, username) {
-    console.log(username);
-    $("#questions").append(makeHtmlQuestion(questionNumber, questionText, username));
+function drawQuestion(questionText, username) {
+    $("#questions").append(makeHtmlQuestion(questionText, username));
+}
+
+function drawQuestionQueue(questionsCount) {
+    //Remember to check if the last questionsCount amount of questions has any duplicates... or maybe just remove questionsCount amount of records at the end?
+    $("#questions").prepend(makeHtmlQuestion("todo: current question queue logic", "callum"));
+}
+
+function drawCurrentlyAnsweringQuestion() {
+    $("current-question").html(makeHtmlQuestion("todo: current answering question logic", "callum"))
+}
+
+function nextQuestion() {
+    var next = $("#questions")[0].children[0];
+    $("#current-question").html(next);
 }

@@ -1,6 +1,4 @@
 var newestQuestion = -1;
-var answeringQuestion = {};
-var questions = [];
 
 $(document).ready(function() {
 
@@ -11,7 +9,7 @@ $(document).ready(function() {
 
 
     questionsChannel.bind('new-question', function(data) {
-        drawQuestion(data.number, data.text);
+        drawQuestion(data.number, data.text, data.username);
         newestQuestion = data.number;
     });
 
@@ -29,3 +27,29 @@ $(document).ready(function() {
     });
 
 });
+
+function makeHtmlQuestion(questionNumber, questionText, username) {
+
+    var usernameElement = document.createElement("h2");
+    $(usernameElement).addClass("username");
+    $(usernameElement).html(username);
+
+
+    var questionBody = document.createElement("p");
+    $(questionBody).addClass("question-body");
+    $(questionBody).html(questionText)
+
+    var div = document.createElement("div");
+    $(div).addClass("question");
+    $(div).attr("id", "question-" + questionNumber);
+
+    $(div).append(usernameElement);
+    $(div).append(questionBody);
+
+    return div;
+}
+
+function drawQuestion(questionNumber, questionText, username) {
+    console.log(username);
+    $("#questions").append(makeHtmlQuestion(questionNumber, questionText, username));
+}

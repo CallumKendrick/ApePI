@@ -70,7 +70,13 @@ function nextQuestion() {
 }
 
 function sendQuestion() {
-    $.get("/test", function() {
-        console.log("done");
-    });
+    $.post("/test",
+        {
+            username: $("#username").val(),
+            userQuestion: $("#userQuestion").val()
+        },
+        function() {
+            console.log("done");
+        }
+    );
 }

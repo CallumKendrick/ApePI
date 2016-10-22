@@ -25,6 +25,8 @@ def set_led(led, bank):
     else:
         bus.write_byte_data(address,0x13,data)
 
+def send_
+
 def main():
    set_led(3, bankA)
 

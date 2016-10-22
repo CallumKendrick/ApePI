@@ -5,6 +5,7 @@ global pusher
 
 def callback(bot_response):
     print bot_response
+    time.sleep(10)
 
 def connect_handler(data):
     channel = pusher.subscribe('questions')

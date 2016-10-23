@@ -36,6 +36,7 @@ app.post("/test", function(request, response) {
                 text: questionText,
                 username: username
             });
+            console.log("handling " + questionText);
             getAnswer(questionText);
         }
     });
@@ -61,6 +62,7 @@ app.post("/displayed-question", function(request, response) {
     if(questionList.length > 0) {
         questionList.shift();
     }
+    console.log("done answering a question");
 });
 
 app.get("/getList", function(request, response) {
@@ -152,7 +154,8 @@ function getAnswer(sentence){
             pusher.trigger("questions", "bot-response", {
                 text: answer
             }, function() {
-
+                console.log("done adding answer as bot response");
+                console.log(answer);
             });
 	 });
 

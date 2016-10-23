@@ -36,6 +36,7 @@ app.post("/test", function(request, response) {
                 text: questionText,
                 username: username
             });
+            getAnswer(questionText);
         }
     });
     response.send("ping");
@@ -53,11 +54,12 @@ app.post("/clear-questions", function(request, response) {
 app.post("/displayed-question", function(request, response) {
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "X-Requested-With");
-    console.log(questionList);
-    console.log(questionList.length);
+    pusher.trigger("questions", "answered-question", {
+    }, function(error) {
+
+    });
     if(questionList.length > 0) {
-        getAnswer(questionList.shift().text);
-        console.log(questionList);
+        questionList.shift();
     }
 });
 
@@ -146,16 +148,13 @@ function getAnswer(sentence){
      	});
 	 })
 	 .on("end", function(){
-	    pusher.trigger("questions", "answered-question", {
-        }, function(error) {
-            if(!error) {
-                pusher.trigger("questions", "bot-response", {
-                    text: answer
-                }, function() {
 
-                });
-            }
-        });
+            pusher.trigger("questions", "bot-response", {
+                text: answer
+            }, function() {
+
+            });
+        }
 	 });
 
 

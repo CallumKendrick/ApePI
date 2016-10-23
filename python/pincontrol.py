@@ -54,19 +54,6 @@ def set_led(led):
     elif led < 26:
         set_gpio_led(led-16)
 
-def light_char(char):
-    cid = ord(char)
-    if (cid < 65):
-        off_all()
-    elif (cid < 91):
-        set_led(cid-65)
-    elif (cid < 97):
-        off_all()
-    elif (cid < 123):
-        set_led(cid-97)
-    else:
-        of_all()
-
 
 #current_led = 0
 #led_count = 26

@@ -33,15 +33,6 @@ $(document).ready(function() {
         sendQuestion();
     });
 
-    $("#reset").on("click", function() {
-        $.post("/displayed-question",
-            {
-            },
-            function(data) {
-            }
-        );
-    });
-
 });
 
 function makeHtmlQuestion(questionText, username) {

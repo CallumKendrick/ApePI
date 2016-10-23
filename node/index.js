@@ -42,6 +42,8 @@ app.post("/test", function(request, response) {
 });
 
 app.post("/clear-questions", function(request, response) {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "X-Requested-With");
     questionList = [];
     console.log(questionList);
     pusher.trigger("questions", "clear", {}, function(error) {console.log(error)});
@@ -49,6 +51,8 @@ app.post("/clear-questions", function(request, response) {
 });
 
 app.post("/displayed-question", function(request, response) {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "X-Requested-With");
     console.log(questionList);
     console.log(questionList.length);
     if(questionList.length > 0) {

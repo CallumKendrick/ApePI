@@ -28,7 +28,7 @@ def consume_char(char):
         time.sleep(1)
 
 def callback(bot_response):
-    response = loads(bot_response)
+    response = json.loads(bot_response)
     for char in response['text']:
         consume_char(char)
     pincontrol.off_all()

@@ -59,6 +59,6 @@ current_led = 0
 led_count = 26
 while True:
     set_led(current_led % led_count)
-    print chr(65+current_led)
+    print chr(65+(current_led%led_count))
     current_led += 1
     time.sleep(1)

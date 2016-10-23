@@ -33,6 +33,8 @@ $(document).ready(function() {
         sendQuestion();
     });
 
+    window.onresize = fix_iframe_aspect_ratio;
+    fix_iframe_aspect_ratio();
 });
 
 function makeHtmlQuestion(questionText, username) {
@@ -92,4 +94,11 @@ function sendQuestion() {
             console.log("done");
         }
     );
+}
+
+function fix_iframe_aspect_ratio() {
+    var aspect_ratio = 16/9,
+        iframe_width = $("#screen-stream").width(),
+        correct_height = iframe_width / aspect_ratio;
+    $("#screen-stream").css("height", correct_height+"px");
 }

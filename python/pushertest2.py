@@ -8,18 +8,23 @@ global pusher
 
 def consume_char(char):
     cid = ord(char)
-    if (cid < 65):
-        pincontrol.off_all()
-    elif (cid < 91):
+    do_sleep = False
+
+    if cid < 65:
+        if cid == 32:
+            pincontrol.off_all()
+            do_sleep = True
+    elif cid < 91:
         pincontrol.set_led(cid-65)
-        time.sleep(1);
-    elif (cid < 97):
-        pincontrol.off_all()
-    elif (cid < 123):
+        do_sleep = True
+    elif cid < 97:
+        pass
+    elif cid < 123:
         pincontrol.set_led(cid-97)
-        time.sleep(1);
-    else:
-        pincontrol.off_all()
+        do_sleep = True
+
+    if do_sleep:
+        time.sleep(1)
 
 def callback(bot_response):
     for char in bot_response['text']:
@@ -33,5 +38,6 @@ pusher = pusherclient.Pusher('b3453c59cc3f52599663')
 pusher.connection.bind('pusher:connection_established', connect_handler)
 pusher.connect()
 
+pincontrol.off_all()
 while True:
     time.sleep(1)

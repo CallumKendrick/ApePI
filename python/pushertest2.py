@@ -9,17 +9,17 @@ global pusher
 def consume_char(char):
     cid = ord(char)
     if (cid < 65):
-        off_all()
+        pincontrol.off_all()
     elif (cid < 91):
-        set_led(cid-65)
+        pincontrol.set_led(cid-65)
         time.sleep(1);
     elif (cid < 97):
-        off_all()
+        pincontrol.off_all()
     elif (cid < 123):
-        set_led(cid-97)
+        pincontrol.set_led(cid-97)
         time.sleep(1);
     else:
-        off_all()
+        pincontrol.off_all()
 
 def callback(bot_response):
     for char in bot_response['text']:

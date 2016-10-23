@@ -53,6 +53,7 @@ app.post("/clear-questions", function(request, response) {
 });
 
 app.post("/displayed-question", function(request, response) {
+    console.log("starting");
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "X-Requested-With");
     pusher.trigger("questions", "answered-question", {

@@ -27,7 +27,7 @@ def callback(bot_response):
 
 def connect_handler(data):
     channel = pusher.subscribe('questions')
-    channel.bind('bot-response', callback)
+    channel.bind('new-question', callback)
 
 pusher = pusherclient.Pusher('b3453c59cc3f52599663')
 pusher.connection.bind('pusher:connection_established', connect_handler)

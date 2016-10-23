@@ -19,14 +19,18 @@
                     <iframe id="screen-stream" src="//appr.tc"></iframe>
                 </div>
                 <div class="col-md-3">
-                    <form class="inline">
+                    <form class="inline" action="#">
                         <div class="form-group">
                             <input id="username" type="hidden"/>
                             <input id="userQuestion" class="form-control" type="text" placeholder="Your question">
                         </div>
-                        <button id="send" class="btn btn-default">Send</button>
+                        <button type="button" id="send" class="btn btn-default">Send</button>
                     </form>
                     <div id="current-question">
+                        <div class="question">
+                            <h2 class="username"></h2>
+                            <p class="question-body"></p>
+                        </div>
                     </div>
                     <div id="questions">
                     </div>

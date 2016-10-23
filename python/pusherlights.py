@@ -1,6 +1,7 @@
 import time
 import pusherclient
 import json
+import requests
 
 import pincontrol
 
@@ -38,9 +39,17 @@ def connect_handler(data):
     channel = pusher.subscribe('questions')
     channel.bind('bot-response', callback)
 
+def clear_questions():
+    requests.post('http://harambae.co.uk:3000/clear-questions')
+
+def displayed_question():
+    requests.post('http://harambae.co.uk:3000/displayed-question')
+
 pusher = pusherclient.Pusher('b3453c59cc3f52599663')
 pusher.connection.bind('pusher:connection_established', connect_handler)
 pusher.connect()
+
+displayed_question()
 
 pincontrol.off_all()
 while True:

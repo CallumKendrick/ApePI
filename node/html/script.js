@@ -27,8 +27,6 @@ $(document).ready(function() {
         sendQuestion();
     });
 
-    nextQuestion();
-
 });
 
 function makeHtmlQuestion(questionText, username) {
@@ -57,7 +55,15 @@ function drawQuestion(questionText, username) {
 
 function drawQuestionQueue(questionsCount) {
     //Remember to check if the last questionsCount amount of questions has any duplicates... or maybe just remove questionsCount amount of records at the end?
-    $("#questions").prepend(makeHtmlQuestion("todo: current question queue logic", "callum"));
+    $.get("/getList", {}, function(response) {
+        response = JSON.parse(response);
+        for(var i = response.length - 1; i >= 0; --i) {
+            var text = response[i].text;
+            var username = response[i].username;
+
+            $("#questions").prepend(makeHtmlQuestion(text, username));
+        }
+    });
 }
 
 function drawCurrentlyAnsweringQuestion() {

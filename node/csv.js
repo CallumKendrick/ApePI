@@ -81,7 +81,7 @@ function getAnswer(sentence){
 		console.log(weight);
 	 });
 
-	
+
 	//console.log(sentenceArray);
 }
 

@@ -29,6 +29,7 @@ def consume_char(char):
 def callback(bot_response):
     for char in bot_response['text']:
         consume_char(char)
+    pincontrol.off_all()
 
 def connect_handler(data):
     channel = pusher.subscribe('questions')

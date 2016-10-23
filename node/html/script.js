@@ -11,16 +11,18 @@ $(document).ready(function() {
         drawQuestion(data.text, data.username);
         ++questionsCount;
     });
-
-    drawQuestion("what if pingu is not kill?", "bob");
-    drawQuestion("what is the meaning of life?", "jim");
     //should push queue to front of queue and remove duplicates
     drawQuestionQueue(questionsCount);
 
     drawCurrentlyAnsweringQuestion();
 
-    questionsChannel.bind('answering-question', function(data) {
+    questionsChannel.bind('answered-question', function(data) {
         nextQuestion();
+    });
+
+    questionsChannel.bind("clear", function() {
+        $("#questions").html("");
+        $("#current-question").html("");
     });
 
     $("#send").on("click", function() {

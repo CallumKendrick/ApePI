@@ -84,5 +84,3 @@ function getAnswer(sentence){
 
 	//console.log(sentenceArray);
 }
-
-getAnswer("How is death?");

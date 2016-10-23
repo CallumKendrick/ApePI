@@ -33,12 +33,115 @@ app.post("/test", function(request, response) {
                 text: questionText,
                 username: username
             });
-            console.log(questionList);
         }
     });
     response.send("ping");
 });
 
+app.post("/clear-questions", function(request, response) {
+    questionsList = [];
+    pusher.trigger("questions", "clear");
+});
+
+app.post("/displayed-question", function(request, response) {
+    getAnswer(request.body.userQuestion);
+});
+
 app.get("/getList", function(request, response) {
     response.send(JSON.stringify(questionList));
 });
+
+var csv = require("fast-csv");
+var fs = require('fs');
+
+var stream = fs.createReadStream("test.csv");
+
+///////////////////////////////////////////////////// Experimentation
+function findWeights(sentence){
+	csv
+	 .fromStream(stream, {
+	 	headers: true,
+	 	ignoreEmpty: true
+	 })
+	 .on("data", function(data){
+	     console.log(data);
+	 })
+	 .on("end", function(){
+	     console.log("done");
+	 });
+}
+
+//findWeights("Cake");
+
+
+function modifySentence(sentence){
+	sentence = sentence.replace(/[^a-zA-Z\s]/g,"");
+	sentence = sentence.toLowerCase();
+	sentenceArray = sentence.split(" ");
+	for (var i = sentenceArray.length-1; i>=0; i--) {
+	    if (sentenceArray[i] === "") {
+	        sentenceArray.splice(i, 1);
+	    }
+	}
+	sentenceArray.sort();
+	var first = true;
+	for (var i = sentenceArray.length-1; i>=0; i--) {
+		if (first) {
+			first = false;
+			continue;
+		}
+	    if (sentenceArray[i] === sentenceArray[i + 1]) {
+	        sentenceArray.splice(i, 1);
+	    }
+	}
+	console.log(sentenceArray);
+}
+
+///////////////////////////////////////////Implementation
+
+
+function getAnswer(sentence){
+	sentence = sentence.replace(/[^a-zA-Z\s]/g,"");
+	sentence = sentence.toLowerCase();
+	sentenceArray = sentence.split(" ");
+	for (var i = sentenceArray.length-1; i>=0; i--) {
+	    if (sentenceArray[i] === "") {
+	        sentenceArray.splice(i, 1);
+	    }
+	}
+
+	var answer = "";
+	var weight = -1;
+
+	csv
+	 .fromStream(stream, {
+	 	headers: true,
+	 	ignoreEmpty: true
+	 })
+	 .on("data", function(data){
+
+    	sentenceArray.forEach(function(word){
+     		if (data.word === word) {
+     			if (+data.weight > weight) {
+     				weight = +data.weight;
+     				answer = data.response;
+     			}
+     		}
+     	});
+	 })
+	 .on("end", function(){
+	    pusher.trigger("questions", "bot-response", {
+            text: answer
+        }, function(error) {
+            if(!error) {
+                pusher.trigger("questions", "answered-question", {
+                }, function() {
+
+                });
+            }
+        });
+	 });
+
+
+	//console.log(sentenceArray);
+}

@@ -92,6 +92,7 @@ function sendQuestion() {
         },
         function() {
             console.log("done");
+            $("#userQuestion").val("");
         }
     );
 }

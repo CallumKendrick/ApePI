@@ -154,7 +154,6 @@ function getAnswer(sentence){
             }, function() {
 
             });
-        }
 	 });
 
 

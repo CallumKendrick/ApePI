@@ -33,6 +33,8 @@ $(document).ready(function() {
         sendQuestion();
     });
 
+    window.onresize = fix_iframe_aspect_ratio;
+    fix_iframe_aspect_ratio();
 });
 
 function makeHtmlQuestion(questionText, username) {
@@ -78,6 +80,8 @@ function drawCurrentlyAnsweringQuestion() {
 
 function nextQuestion() {
     var next = $("#questions")[0].children[0];
+    $("#current-question").html(next);
+    $("#current-question").html("");
 }
 
 function sendQuestion() {
@@ -88,6 +92,14 @@ function sendQuestion() {
         },
         function() {
             console.log("done");
+            $("#userQuestion").val("");
         }
     );
+}
+
+function fix_iframe_aspect_ratio() {
+    var aspect_ratio = 16/9,
+        iframe_width = $("#screen-stream").width(),
+        correct_height = iframe_width / aspect_ratio;
+    $("#screen-stream").css("height", correct_height+"px");
 }

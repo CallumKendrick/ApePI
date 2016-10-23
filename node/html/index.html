@@ -1,26 +1,41 @@
-<head>
-    <meta charset="utf-8"/>
-    <title>Talking with Harambe</title>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Talking with Harambe</title>
 
-    <script src="http://js.pusher.com/3.2/pusher.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="script.js"></script>
-</head>
-<body>
-    <div id="stream-window"></div>
-    <div id="control-panel">
-        <input id="username" type="text"/>
-        <input id="userQuestion" type="text"/>
-        <button id="send">send</button>
-        <button id="reset">reset</button>
-    </div>
-    <div id="current-question">
-        <div class="question">
-            <h2 class="username"></h2>
-            <p class="question-body"></p>
+        <script src="http://js.pusher.com/3.2/pusher.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="script.js"></script>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <iframe id="screen-stream" src="//appr.tc"></iframe>
+                </div>
+                <div class="col-md-3">
+                    <form class="inline" action="#">
+                        <div class="form-group">
+                            <input id="username" type="hidden"/>
+                            <input id="userQuestion" class="form-control" type="text" placeholder="Your question">
+                        </div>
+                        <button type="button" id="send" class="btn btn-default">Send</button>
+                    </form>
+                    <div id="current-question">
+                        <div class="question">
+                            <h2 class="username"></h2>
+                            <p class="question-body"></p>
+                        </div>
+                    </div>
+                    <div id="questions">
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <iframe width="400px" height="400px" src="//appr.tc"></iframe>
-    <div id="questions">
-    </div>
-</body>
+    </body>
+</html>

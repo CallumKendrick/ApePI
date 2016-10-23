@@ -78,7 +78,6 @@ function drawCurrentlyAnsweringQuestion() {
 
 function nextQuestion() {
     var next = $("#questions")[0].children[0];
-    $("#current-question").html(next);
 }
 
 function sendQuestion() {

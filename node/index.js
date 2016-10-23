@@ -3,6 +3,9 @@ var app = express();
 var Pusher = require("pusher");
 var bodyParser = require('body-parser');
 
+var favicon = require('serve-favicon');
+app.use(favicon(__dirname + '/favicon.ico'));
+
 var pusherConfig = require("./pusherConfig.json");
 var pusher = new Pusher(pusherConfig);
 

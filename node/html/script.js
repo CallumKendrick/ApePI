@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+    if(window.location.hash != "#presentation") {
+        $("#presentation").remove();
+    }
+
     var APP_KEY = "b3453c59cc3f52599663";
 
     var pusher = new Pusher(APP_KEY);

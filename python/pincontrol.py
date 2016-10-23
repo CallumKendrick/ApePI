@@ -27,7 +27,7 @@ def off_all_i2c():
     bus.write_byte_data(i2c_address, 0x12, 0)
 
 def off_all_gpio():
-    for output in gpio_output:
+    for output in gpio_outputs:
         GPIO.output(output, GPIO.LOW)
 
 def off_all():

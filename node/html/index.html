@@ -15,21 +15,21 @@
     <body>
         <div class="container">
             <div class="row">
+                <div class="col-md-9">
+                    <iframe id="screen-stream" src="//appr.tc"></iframe>
+                </div>
                 <div class="col-md-3">
-                    <div id="stream-window"></div>
-                    <div id="control-panel">
-                        <input id="username" type="text"/>
-                        <input id="userQuestion" type="text"/>
-                        <button id="send">send</button>
-                        <button id="reset">reset</button>
-                    </div>
+                    <form class="inline">
+                        <div class="form-group">
+                            <input id="username" type="hidden"/>
+                            <input id="userQuestion" class="form-control" type="text" placeholder="Your question">
+                        </div>
+                        <button id="send" class="btn btn-default">Send</button>
+                    </form>
                     <div id="current-question">
                     </div>
                     <div id="questions">
                     </div>
-                </div>
-                <div class="col-md-9">
-                    <iframe id="screen-stream" src="//appr.tc"></iframe>
                 </div>
             </div>
         </div>

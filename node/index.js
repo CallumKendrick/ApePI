@@ -42,12 +42,19 @@ app.post("/test", function(request, response) {
 });
 
 app.post("/clear-questions", function(request, response) {
-    questionsList = [];
-    pusher.trigger("questions", "clear");
+    questionList = [];
+    console.log(questionList);
+    pusher.trigger("questions", "clear", {}, function(error) {console.log(error)});
+    response.send("done");
 });
 
 app.post("/displayed-question", function(request, response) {
-    getAnswer(request.body.userQuestion);
+    console.log(questionList);
+    console.log(questionList.length);
+    if(questionList.length > 0) {
+        getAnswer(questionList.shift().text);
+        console.log(questionList);
+    }
 });
 
 app.get("/getList", function(request, response) {
@@ -113,8 +120,10 @@ function getAnswer(sentence){
 	    }
 	}
 
-	var answer = "";
+	var answer = "got nothing";
 	var weight = -1;
+
+    var stream = fs.createReadStream("test.csv");
 
 	csv
 	 .fromStream(stream, {
@@ -133,11 +142,11 @@ function getAnswer(sentence){
      	});
 	 })
 	 .on("end", function(){
-	    pusher.trigger("questions", "bot-response", {
-            text: answer
+	    pusher.trigger("questions", "answered-question", {
         }, function(error) {
             if(!error) {
-                pusher.trigger("questions", "answered-question", {
+                pusher.trigger("questions", "bot-response", {
+                    text: answer
                 }, function() {
 
                 });

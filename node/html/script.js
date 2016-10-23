@@ -20,6 +20,10 @@ $(document).ready(function() {
         nextQuestion();
     });
 
+    questionsChannel.bind("bot-response", function(data) {
+        console.log(data);
+    })
+
     questionsChannel.bind("clear", function() {
         $("#questions").html("");
         $("#current-question").html("");
@@ -27,6 +31,15 @@ $(document).ready(function() {
 
     $("#send").on("click", function() {
         sendQuestion();
+    });
+
+    $("#reset").on("click", function() {
+        $.post("/displayed-question",
+            {
+            },
+            function(data) {
+            }
+        );
     });
 
 });

@@ -64,6 +64,7 @@ app.post("/displayed-question", function(request, response) {
         questionList.shift();
     }
     console.log("done answering a question");
+    response.send("done");
 });
 
 app.get("/getList", function(request, response) {

@@ -1,5 +1,6 @@
 import time
 import pusherclient
+import json
 
 import pincontrol
 
@@ -27,7 +28,8 @@ def consume_char(char):
         time.sleep(1)
 
 def callback(bot_response):
-    for char in bot_response['text']:
+    response = loads(bot_response)
+    for char in response['text']:
         consume_char(char)
     pincontrol.off_all()
 
